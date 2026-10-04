@@ -27,6 +27,16 @@ export default function Home() {
     setTask("");
   };
 
+  const toggleTask = (id: number) => {
+    setTasks(
+      tasks.map((item) =>
+        item.id === id
+          ? { ...item, completed: !item.completed }
+          : item
+      )
+    );
+  };
+
   return (
     <main className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <div className="w-full max-w-2xl bg-white rounded-xl shadow-lg p-8">
@@ -68,8 +78,21 @@ export default function Home() {
                 className="flex items-center justify-between border rounded-lg p-4"
               >
                 <div className="flex items-center gap-3">
-                  <input type="checkbox" />
-                  <span>{item.text}</span>
+                  <input
+                    type="checkbox"
+                    checked={item.completed}
+                    onChange={() => toggleTask(item.id)}
+                  />
+
+                  <span
+                    className={
+                      item.completed
+                        ? "line-through text-gray-500"
+                        : ""
+                    }
+                  >
+                    {item.text}
+                  </span>
                 </div>
 
                 <button className="text-red-600">
